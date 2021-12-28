@@ -2,11 +2,7 @@
 
     class DatabaseHelper
     {
-        // Since the connection details are constant, define them as const
-        // We can refer to constants like e.g. DatabaseHelper::username
-        const username = '------>USERNAME<---'; // use a + your matriculation number
-        const password = '------>dbs19<-----'; // use your oracle db password
-        const con_string = 'oracle-lab.cs.univie.ac.at:1521/lab';
+        private $passwordHandler;
 
         // Since we need only one connection object, it can be stored in a member variable.
         // $conn is set in the constructor.
@@ -15,14 +11,16 @@
         // Create connection in the constructor
         public function __construct()
         {
+            $this->passwordHandler = new PasswordHandler();
+
             try {
                 // Create connection with the command oci_connect(String(username), String(password), String(connection_string))
                 // The @ sign avoids the output of warnings
                 // It could be helpful to use the function without the @ symbol during developing process
                 $this->conn = @oci_connect(
-                    DatabaseHelper::username,
-                    DatabaseHelper::password,
-                    DatabaseHelper::con_string
+                    $this->passwordHandler->getUsername(),
+                    $this->passwordHandler->getPassword(),
+                    $this->passwordHandler->getConnection()
                 );
 
                 //check if the connection object is != null
@@ -43,34 +41,20 @@
             @oci_close($this->conn);
         }
 
-        // This function creates and executes a SQL select statement and returns an array as the result
-        // 2-dimensional array: the result array contains nested arrays (each contains the data of a single row)
-        public function selectFromPersonWhere()
-        {
-            // Define the sql statement string
-            // Notice that the parameters $person_id, $surname, $name in the 'WHERE' clause
-            $sql = "SELECT * FROM student"; //<---------------------------------Tabelle student anlegen!
 
-            // oci_parse(...) prepares the Oracle statement for execution
-            // notice the reference to the class variable $this->conn (set in the constructor)
-            $statement = @oci_parse($this->conn, $sql);
+        public function getEntries($columnNames, $tableName, $conditions) {
+            $res = "";
+            $sql = "SELECT {$columnNames} FROM {$tableName}";
 
-            // Executes the statement
-            @oci_execute($statement);
+            if($conditions) {
+                $sql .= " WHERE {$conditions}";
+            }
 
-            // Fetches multiple rows from a query into a two-dimensional array
-            // Parameters of oci_fetch_all:
-            //   $statement: must be executed before
-            //   $res: will hold the result after the execution of oci_fetch_all
-            //   $skip: it's null because we don't need to skip rows
-            //   $maxrows: it's null because we want to fetch all rows
-            //   $flag: defines how the result is structured: 'by rows' or 'by columns'
-            //      OCI_FETCHSTATEMENT_BY_ROW (The outer array will contain one sub-array per query row)
-            //      OCI_FETCHSTATEMENT_BY_COLUMN (The outer array will contain one sub-array per query column. This is the default.)
-            @oci_fetch_all($statement, $res, 0, 0, OCI_FETCHSTATEMENT_BY_ROW);
+            $statement = oci_parse($this->conn, $sql);
 
-            //clean up;
-            @oci_free_statement($statement);
+            oci_execute($statement);
+            oci_fetch_all($statement, $res, 0, 0, OCI_FETCHSTATEMENT_BY_ROW);
+            oci_free_statement($statement);
 
             return $res;
         }
