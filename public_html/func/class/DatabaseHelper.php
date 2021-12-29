@@ -1,4 +1,5 @@
 <?php
+    require_once 'PasswordHandler.php';
 
     class DatabaseHelper
     {
@@ -42,8 +43,8 @@
         }
 
 
-        public function getEntries($columnNames, $tableName, $conditions) {
-            $res = "";
+        public function sqlGetData($columnNames, $tableName, $conditions) {
+            $res = null;
             $sql = "SELECT {$columnNames} FROM {$tableName}";
 
             if($conditions) {

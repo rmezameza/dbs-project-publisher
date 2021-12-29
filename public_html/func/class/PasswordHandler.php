@@ -3,8 +3,8 @@
 class PasswordHandler
 {
     private const USERNAME = "a11848674";
-    private const PASSWORD = "lZkg9doeYAVKeAQWQtHO";
-    private const CONNECTION = "jdbc:oracle:thin:@oracle-lab.cs.univie.ac.at:1521:lab";
+    private const PASSWORD = 'dwH$KI6<hBS)#"oy3*bg';
+    private const CONNECTION = "//oracle-lab.cs.univie.ac.at:1521/lab";
 
     public function getUsername() : string {
         return self::USERNAME;
