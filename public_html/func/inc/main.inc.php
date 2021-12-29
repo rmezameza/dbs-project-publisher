@@ -10,11 +10,11 @@
         $content = "";
         $clean = array();
 
-        $siteCodes = array(null, "buecher", "authors");
+        $siteCodes = array(null, "buecher", "buchdetail", "authors");
         $site = isset($_GET['site']) ? htmlentities($_GET['site']) : null;
 
         if(!in_array($site, $siteCodes)) {
-            include_once 'error/notallowed.html';
+            include_once 'error/not_allowed.html';
             exit;
         }
         else {
@@ -24,6 +24,9 @@
         switch($clean['site']) {
             case "buecher":
                 $content = "content/books/books.php";
+                break;
+            case "buchdetail":
+                $content = "content/books/book_detail.php";
                 break;
             case "authors":
                 $content = "content/authors/author.php";

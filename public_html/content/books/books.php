@@ -3,7 +3,7 @@
     <?php
         require_once 'func/class/BookHandler.php';
         require_once 'func/inc/book.inc.php';
-        require_once 'func/inc/shorttext.inc.php';
+        require_once 'func/inc/string_manager.inc.php';
 
         $bookHandler = new BookHandler();
 
@@ -34,7 +34,9 @@
                     echo "<h2 class='h2 mt-4'>Derzeit keine Bücher vorhanden.</h2>";
                 }
                 else {
-                    foreach($books as $book) : ?>
+                    foreach($books as $book) :
+                        $authors = $bookHandler->getAuthorsForBook($book['BUCH_ID']);
+            ?>
                         <div class="row mb-5 border-bottom">
                             <div class="col col-lg-4">
                                 <img class="img-thumbnail"
@@ -42,6 +44,26 @@
                                      alt="<?php echo $book['TITEL']; ?>">
                             </div>
                             <div class="col col-lg-6">
+                                <?php
+                                    if($authors) {
+                                ?>
+                                    <div class="row">
+                                        <p class="small">
+                                            <?php
+                                                $count = 0;
+                                                foreach($authors as $author) :
+                                                    if($count > 0) {
+                                                        echo ", ";
+                                                    }
+
+                                                    echo $author['AU_VORNAME'] . " " . $author['AU_NACHNAME'];
+                                                    ++$count;
+                                                endforeach;
+                                            ?>
+
+                                        </p>
+                                    </div>
+                                <?php } ?>
                                 <div class="row">
                                     <h3 class="h3"><?php echo $book['TITEL']; ?></h3>
                                     <p><?php

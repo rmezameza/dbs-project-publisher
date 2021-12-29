@@ -8,7 +8,7 @@
         $type = isset($_GET['type']) ? htmlentities($_GET['type']) : null;
 
         if($type != null && !in_array($type, $bookTypeNames)) {
-            include_once 'error/notallowed.html';
+            include_once 'error/not_allowed.html';
             exit;
         }
         else {

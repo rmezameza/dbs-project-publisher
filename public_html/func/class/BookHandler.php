@@ -47,4 +47,20 @@ class BookHandler
 
         return $this->databaseHelper->sqlGetData($columnNames, $tableName, $condition);
     }
+
+    public function getSpecificBook($bookID) {
+        $columnName = "*";
+        $tableName = "buch";
+        $condition = "buch_id = {$bookID}";
+
+        return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition);
+    }
+
+    public function getAuthorsForBook($bookID) {
+        $columnName = "*";
+        $tableName = "view_authors_for_book";
+        $condition = "buch_id = {$bookID}";
+
+        return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition);
+    }
 }
