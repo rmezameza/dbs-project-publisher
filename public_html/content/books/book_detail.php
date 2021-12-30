@@ -23,13 +23,21 @@
                 foreach($bookArray as $book) :
             ?>
 
-                    <h1 class="h1"><?php echo $book['TITEL']; ?></h1>
+                    <div class="d-flex flex-row-reverse">
+                        <div class="p-2">
+                            Delete
+                        </div>
+                        <div class="p-2">
+                            Edit
+                        </div>
+                    </div>
+                    <h1><?php echo $book['TITEL']; ?></h1>
 
                     <?php
                         if($authorArray) {
                             $count = 0;
 
-                            echo "<h2 class='h2'>";
+                            echo "<h2 class=''><small class='text-muted'>";
 
                             foreach ($authorArray as $author) :
                                 if ($count > 0) {
@@ -40,10 +48,9 @@
                                 ++$count;
                             endforeach;
 
-                            echo "</h2>";
+                            echo "</small></h2>";
                         }
                     ?>
-
                     <div class="row mt-5">
                         <div class="col-lg-4">
                             <div class="row">
