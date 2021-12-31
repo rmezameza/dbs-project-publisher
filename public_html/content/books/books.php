@@ -78,7 +78,13 @@
                                         <p>Delete</p>
                                     </div>
                                     <div class="p-2">
-                                        <p>Edit</p>
+                                        <p>
+                                            <a class="link-dark"
+                                               href="index.php?site=buchedit&type=buecher&buchid=<?php echo $book['BUCH_ID']; ?>"
+                                               title="Buch bearbeiten">
+                                                Edit
+                                            </a>
+                                        </p>
                                     </div>
                                     <div class="p-2">
                                         <p>

@@ -55,3 +55,9 @@
 
         return $bookType;
     }
+
+    function previousSite() : string {
+        /*
+         * Sanitize URL and check previous site typ. If it's the detail view of book: Add book id to string
+         */
+    }
