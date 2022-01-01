@@ -57,7 +57,19 @@
     }
 
     function previousSite() : string {
-        /*
-         * Sanitize URL and check previous site typ. If it's the detail view of book: Add book id to string
-         */
+        $previousSiteArray = array();
+        $clean = array();
+
+        $siteNames = array("buecher", "buchdetail");
+        $siteName = isset($_GET['prev']) ? htmlentities($_GET['prev']) : null;
+
+        if($siteName != null && !in_array($siteName, $siteNames)) {
+            include_once 'error/not_allowed.html';
+            exit;
+        }
+        else {
+            $clean['prev'] = $siteName;
+        }
+
+        return $clean['prev'];
     }

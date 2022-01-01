@@ -80,7 +80,7 @@
                                     <div class="p-2">
                                         <p>
                                             <a class="link-dark"
-                                               href="index.php?site=buchedit&type=buecher&buchid=<?php echo $book['BUCH_ID']; ?>"
+                                               href="index.php?site=buchedit&prev=buecher&type=<?php echo $sqlName; ?>&buchid=<?php echo $book['BUCH_ID']; ?>"
                                                title="Buch bearbeiten">
                                                 Edit
                                             </a>

@@ -8,16 +8,17 @@
     <body>
         <?php
             require_once 'func/class/BookHandler.php';
+            require_once 'func/inc/book.inc.php';
 
             $bookHandler = new BookHandler();
             $bookID = isset($_GET['buchid']) ? htmlentities($_GET['buchid']) : null;
-            $previousSiteType = isset($_GET['type']) ? htmlentities($_GET['type']) : null;
 
-            if($bookID == null || !is_numeric($bookID) || $previousSiteType == null) {
+            if($bookID == null || !is_numeric($bookID)) {
                 include_once 'error/not_allowed.php';
                 exit;
             }
 
+            $previousSiteName = previousSite();
             $bookArray = $bookHandler->getSpecificBook($bookID);
 
             foreach($bookArray as $book) :
@@ -89,13 +90,50 @@
                     </div>
 
                     <!-- Change genre -->
+                    <div class="mb-3">
+                        <label for="change_genre" class="col-form-label">Genre:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="change_genre"
+                               name="genre"
+                               placeholder="<?php echo $book['GENRE']; ?>">
+                    </div>
+
                     <!-- Change novelty status -->
+                    <div class="mb-3">
+                        <label for="change_novelty_status" class="col-form-label">Neuerscheinung</label>
+                        <select class="form-select" aria-label="change_novelty_status name="novelty">
+                            <option selected>Bitte auswählen</option>
+                            <option value="1">Ja</option>
+                            <option value="0">Nein</option>
+                        </select>
+                    </div>
                     <!-- Change book description -->
+                    <div class="mb-3">
+                        <label for="change_book_description" class="col-form-label">Kurz Beschreibung:</label>
+                        <textarea class="form-control"
+                                  id="change_book_description"
+                                  name="description"
+                                  placeholder="<?php echo $book['KURZ_BESCHR']; ?>"
+                                  style="height: 100px;"></textarea>
+                    </div>
 
                     <!-- Submit and Back Button -->
-                    <button type="submit" class="btn btn-primary">Buch bearbeiten</button>
+                    <button type="submit" class="btn btn-primary" title="Buch bearbeiten">Buch bearbeiten</button>
                     <a class="btn btn-secondary"
-                       href="index.php?site=<?php echo $previousSiteType; ?>">Zurück</a>
+                       href="index.php?site=<?php
+                                                echo $previousSiteName;
+                                                if($previousSiteName != "buecher") {
+                                                    echo "&buchid={$bookID}";
+                                                }
+                                                else {
+                                                    $bookType = validateBookType();
+                                                    echo "&type=" . $bookType["shortname"];
+                                                }
+                                            ?>"
+                        title="Zurück">
+                        Zurück
+                    </a>
                 </form>
             </div>
         <?php endforeach; ?>

@@ -8,6 +8,7 @@
         <div class="container">
             <?php
                 require_once 'func/class/BookHandler.php';
+                require_once 'func/inc/book.inc.php';
 
                 $bookHandler = new BookHandler();
                 $buchID = isset($_GET['buchid']) ? htmlentities($_GET['buchid']) : null;
@@ -28,7 +29,13 @@
                             Delete
                         </div>
                         <div class="p-2">
-                            Edit
+                            <p>
+                                <a class="link-dark"
+                                   href="index.php?site=buchedit&prev=buchdetail&buchid=<?php echo $book['BUCH_ID']; ?>"
+                                   title="Buch bearbeiten">
+                                    Edit
+                                </a>
+                            </p>
                         </div>
                     </div>
                     <h1><?php echo $book['TITEL']; ?></h1>
