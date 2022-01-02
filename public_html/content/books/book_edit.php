@@ -34,7 +34,7 @@
                 </p>
                 <!-- Form for editing a book. It will contain the actual data for overview. -->
                 <form method="post"
-                      action="index.php?site=buchformular-senden&buchid=<?php echo $book['BUCH_ID']; ?>"
+                      action="index.php?site=buch-absenden&prev=buchedit&buchid=<?php echo $book['BUCH_ID']; ?>"
                       class="mb-4">
 
                     <!-- Change ISBN number -->
@@ -61,11 +61,11 @@
 
                     <!-- Change total number of pages -->
                     <div class="mb-3">
-                        <label for="change_page_nr" class="col-form-label">Seitenanzahl:</label>
+                        <label for="change_number_of_pages" class="col-form-label">Seitenanzahl:</label>
                         <input type="number"
                                class="form-control"
-                               id="change_page_nr"
-                               name="page_nr"
+                               id="change_number_of_pages"
+                               name="nr_of_pages"
                                placeholder="<?php echo $book['SEITEN_ANZ']; ?>">
                     </div>
 
@@ -101,13 +101,30 @@
 
                     <!-- Change novelty status -->
                     <div class="mb-3">
-                        <label for="change_novelty_status" class="col-form-label">Neuerscheinung</label>
-                        <select class="form-select" aria-label="change_novelty_status name="novelty">
-                            <option selected>Bitte auswählen</option>
-                            <option value="1">Ja</option>
-                            <option value="0">Nein</option>
-                        </select>
+                        <p class="pt-2">Neuerscheinung</p>
+                        <div class="form-check">
+                            <?php
+                                $checkNoveltyStatus = false;
+
+                                if($book['NEU_ERSCH'] > 0) {
+                                    $checkNoveltyStatus = true;
+                                }
+                            ?>
+                            <input class="form-check-input" type="radio" name="novelty_status"
+                                   id="change_novelty_status_yes" <?php if($checkNoveltyStatus) { echo "checked"; } ?>>
+                            <label class="form-check-label" for="change_novelty_status_yes">
+                                Ja
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="novelty_status"
+                                   id="change_novelty_status_no" <?php if(!$checkNoveltyStatus) { echo "checked"; } ?>>
+                            <label class="form-check-label" for="change_novelty_status_no">
+                                Nein
+                            </label>
+                        </div>
                     </div>
+
                     <!-- Change book description -->
                     <div class="mb-3">
                         <label for="change_book_description" class="col-form-label">Kurz Beschreibung:</label>
@@ -118,7 +135,7 @@
                                   style="height: 100px;"></textarea>
                     </div>
 
-                    <!-- Submit and Back Button -->
+                    <!-- Submit and Return Button -->
                     <button type="submit" class="btn btn-primary" title="Buch bearbeiten">Buch bearbeiten</button>
                     <a class="btn btn-secondary"
                        href="index.php?site=<?php
