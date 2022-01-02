@@ -60,9 +60,10 @@
                     ?>
                     <div class="row mt-5">
                         <div class="col-lg-4">
-                            <div class="row">
+                            <div class="row mb-4">
                                 <div class="col">
-                                    <img class="card-img" src="img/book_covers/<?php echo $book['COVER']; ?>" alt="Buchcover">
+                                    <img class="img-fluid" src="img/book_covers/<?php echo $book['COVER']; ?>"
+                                         alt="Buchcover" width="80%">
                                 </div>
                             </div>
                             <div class="row">
@@ -76,7 +77,7 @@
                                         Genre:
                                     </p>
                                 </div>
-                                <div class="col">
+                                <div class="col-lg-5">
                                     <p>
                                         <?php echo $book['ISBN']; ?><br />
                                         <?php echo $book['SEITEN_ANZ']; ?><br />

@@ -37,9 +37,9 @@
                     foreach($books as $book) :
                         $authors = $bookHandler->getAuthorsForBook($book['BUCH_ID']);
             ?>
-                        <div class="row mb-5 border-bottom">
+                        <div class="row mb-5">
                             <div class="col col-lg-4">
-                                <img class="img-thumbnail"
+                                <img class="img-fluid" width="80%"
                                      src="img/book_covers/<?php echo $book['COVER']; ?>"
                                      alt="<?php echo $book['TITEL']; ?>">
                             </div>
@@ -98,6 +98,7 @@
                                 </div>
                             </div>
                         </div>
+                        <hr class="text-decoration-line-through mt-3"
             <?php
                     endforeach;
                 }

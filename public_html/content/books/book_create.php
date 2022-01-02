@@ -35,7 +35,7 @@
 
                 <!-- Name of cover image -->
                 <div class="mb-3">
-                    <label for="add_cover_name" class="col-form-label">Name des Covers (inklusive Dateiformat):</label>
+                    <label for="add_cover_name" class="col-form-label">Name des Covers (inkl. Dateiformat):</label>
                     <input type="text"
                            class="form-control"
                            id="add_cover_name"

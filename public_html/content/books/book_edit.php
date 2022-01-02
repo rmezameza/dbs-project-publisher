@@ -25,13 +25,20 @@
         ?>
             <div class="container">
                 <h1>Buch bearbeiten:</h1>
-                <h2><?php echo $book['TITEL']; ?></h2>
+                <div class="row text-center">
+                    <div class="col">
+                        <p>
+                            <img class="img-fluid"
+                                 src="img/book_covers/<?php echo $book['COVER']; ?>"
+                                 alt="Buch Cover"
+                                 width="30%">
+                        </p>
+                        <h2><?php echo $book['TITEL']; ?></h2>
+                    </div>
+                </div>
 
-                <p>
-                    <img class="img-thumbnail"
-                         src="img/book_covers/<?php echo $book['COVER']; ?>"
-                         alt="Buch Cover">
-                </p>
+
+
                 <!-- Form for editing a book. It will contain the actual data for overview. -->
                 <form method="post"
                       action="index.php?site=buch-absenden&prev=buchedit&buchid=<?php echo $book['BUCH_ID']; ?>"
@@ -57,6 +64,17 @@
                                name="title"
                                maxlength="80"
                                placeholder="<?php echo $book['TITEL']; ?>">
+                    </div>
+
+                    <!-- Change cover filename -->
+                    <div class="mb-3">
+                        <label for="change_cover_name" class="col-form-label">Name des Covers (inkl. Dateiformat):</label>
+                        <input type="text"
+                               class="form-control"
+                               id="change_cover_name"
+                               name="cover"
+                               maxlength="110"
+                               placeholder="<?php echo $book['COVER']; ?>"
                     </div>
 
                     <!-- Change total number of pages -->
