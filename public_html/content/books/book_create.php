@@ -9,7 +9,7 @@
             <h1>Buch erstellen</h1>
             <!-- Form for creating a book. Title and box for checking novelty status of a book are required fields -->
             <form method="post"
-                  action="index.php?site=daten-absenden&prev=neues-buch"
+                  action="index.php?site=buch-absenden&prev=neues-buch"
                   class="mb-4">
 
                 <!-- ISBN Number -->

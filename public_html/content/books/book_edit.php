@@ -41,7 +41,7 @@
 
                 <!-- Form for editing a book. It will contain the actual data for overview. -->
                 <form method="post"
-                      action="index.php?site=buch-absenden&prev=buchedit&buchid=<?php echo $book['BUCH_ID']; ?>"
+                      action="index.php?site=buch-absenden&prev=buchedit&buchid=<?php echo htmlentities($book['BUCH_ID']); ?>"
                       class="mb-4">
 
                     <!-- Change ISBN number -->

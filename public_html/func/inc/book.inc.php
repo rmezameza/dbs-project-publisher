@@ -57,7 +57,6 @@
     }
 
     function previousSite() : string {
-        $previousSiteArray = array();
         $clean = array();
 
         $siteNames = array("buecher", "buchdetail");
@@ -72,4 +71,21 @@
         }
 
         return $clean['prev'];
+    }
+
+    function validateSitesForSubmit() : string {
+        $clean = array();
+
+        $siteTypes = array("buchedit", "neues-buch");
+        $siteType = isset($_GET['site']) ? htmlentities($_GET['site']) : null;
+
+        if($siteType != null && !in_array($siteType, $siteTypes)) {
+            include_once 'error/not_allowed.html';
+            exit;
+        }
+        else {
+            $clean['site'] = $siteType;
+        }
+
+        return $clean['site'];
     }

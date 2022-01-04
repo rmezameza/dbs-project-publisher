@@ -60,5 +60,13 @@
             return $res;
         }
 
+        public function sqlEditData($tableName, $affectedColumns, $condition) : bool {
+            $sql = "UPDATE {$tableName} SET {$affectedColumns} WHERE {$condition}";
+            $statement = oci_parse($this->conn, $sql);
 
+            $result = oci_execute($statement);
+            oci_free_statement($statement);
+
+            return $result;
+        }
     }

@@ -63,4 +63,33 @@ class BookHandler
 
         return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition);
     }
+
+    public function editBook($buchID, $bookArray) : bool {
+        $tableName = "buch";
+        $affectedColumns = "";
+        $condition = "buch_id = {$buchID}";
+        $count = 0;
+
+        foreach($bookArray as $key => $val) {
+            if($val == "" || $val == -1 ) {
+                ++$count;
+            }
+        }
+
+        if($count == count($bookArray)) {
+            return false;
+        }
+
+        if($bookArray['isbn'] != "") {
+            $affectedColumns .= "isbn = {$bookArray['isbn']}";
+        }
+
+        if($bookArray['title'] != "") {
+            $affectedColumns .= (($affectedColumns == "") ? "titel" : ", titel") . " = {$bookArray['title']}";
+        }
+
+        if($bookArray[''])
+
+        return $this->databaseHelper->sqlEditData($tableName, $affectedColumns, $condition);
+    }
 }
