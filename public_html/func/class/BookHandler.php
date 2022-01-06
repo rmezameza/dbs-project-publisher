@@ -68,15 +68,8 @@ class BookHandler
         $tableName = "buch";
         $affectedColumns = "";
         $condition = "buch_id = {$buchID}";
-        $count = 0;
 
-        foreach($bookArray as $key => $val) {
-            if($val == "" || $val == -1 ) {
-                ++$count;
-            }
-        }
-
-        if($count == count($bookArray)) {
+        if(!$this->checkBookArrayEmpty($bookArray)) {
             return false;
         }
 
@@ -95,5 +88,52 @@ class BookHandler
         }
 
         return $this->databaseHelper->sqlEditData($tableName, $affectedColumns, $condition);
+    }
+
+    public function addBook($bookArray) : bool {
+        $tableName = "buch";
+        $affectedColumns = "";
+        $values = "";
+
+        if(!$this->checkBookArrayEmpty($bookArray)) {
+            return false;
+        }
+
+        foreach($bookArray as $columnName => $value) {
+            if($columnName == "isbn") {
+                if($value != "") {
+                    $affectedColumns .= $columnName;
+                    $values .= $value;
+                }
+            }
+
+            if($value != "" && $value != -1) {
+                $affectedColumns .= (($affectedColumns == "") ? "{$columnName}" : ", {$columnName}");
+                if(is_string($value)) {
+                    $values .= (($values == "") ? "'{$value}'" : ", '{$value}'");
+                }
+                else {
+                    $values .= (($values == "") ? "{$value}" : ", {$value}");
+                }
+            }
+        }
+
+        var_dump($affectedColumns);
+        var_dump($values);
+        return $this->databaseHelper->sqlAddData($tableName, $affectedColumns, $values);
+    }
+
+    private function checkBookArrayEmpty($bookArray) : bool {
+        foreach($bookArray as $key => $val) {
+            if($val == "" || $val == -1) {
+                ++$count;
+            }
+        }
+
+        if($count == count($bookArray)) {
+            return false;
+        }
+
+        return true;
     }
 }

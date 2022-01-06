@@ -64,7 +64,17 @@
             $sql = "UPDATE {$tableName} SET {$affectedColumns} WHERE {$condition}";
             $statement = oci_parse($this->conn, $sql);
 
-            $result = oci_execute($statement);
+            $result = oci_execute($statement) && oci_commit($this->conn);
+            oci_free_statement($statement);
+
+            return $result;
+        }
+
+        public function sqlAddData($tableName, $affectedColumns, $values) : bool {
+            $sql = "INSERT INTO {$tableName} ({$affectedColumns}) VALUES ({$values})";
+            $statement = oci_parse($this->conn, $sql);
+
+            $result = oci_execute($statement) && oci_commit($this->conn);
             oci_free_statement($statement);
 
             return $result;

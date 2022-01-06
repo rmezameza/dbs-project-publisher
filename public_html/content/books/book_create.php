@@ -9,7 +9,7 @@
             <h1>Buch erstellen</h1>
             <!-- Form for creating a book. Title and box for checking novelty status of a book are required fields -->
             <form method="post"
-                  action="index.php?site=buch-absenden&prev=neues-buch"
+                  action="index.php?site=buch-absenden&op=neues-buch"
                   class="mb-4">
 
                 <!-- ISBN Number -->
@@ -73,7 +73,7 @@
                 <!-- Genre -->
                 <div class="mb-3">
                     <label for="add_genre" class="col-form-label">Genre:</label>
-                    <select class="form-select" aria-label="add_genre" name="genre">
+                    <select class="form-select" aria-label="add_genre" name="genre" required>
                         <option selected>Bitte auswählen</option>
                         <option value="politics">Politics</option>
                         <option value="literature">Literature</option>
@@ -89,13 +89,13 @@
                 <div class="mb-3">
                     <p class="pt-2">Neuerscheinung</p>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="novelty_status" id="add_novelty_status_yes" checked>
+                        <input class="form-check-input" type="radio" name="novelty_status" id="add_novelty_status_yes" value="1" checked required>
                         <label class="form-check-label" for="add_novelty_status_yes">
                             Ja
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="novelty_status" id="add_novelty_status_no">
+                        <input class="form-check-input" type="radio" name="novelty_status" id="add_novelty_status_no" value="0" required>
                         <label class="form-check-label" for="add_novelty_status_no">
                             Nein
                         </label>
