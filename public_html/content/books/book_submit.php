@@ -5,7 +5,7 @@
     </head>
     <body>
         <?php
-            require_once 'func/class/BuchHandler.php';
+            require_once 'func/class/BookHandler.php';
             require_once 'func/inc/book.inc.php';
             require_once 'func/inc/sec.inc.php';
 
@@ -17,7 +17,7 @@
             $buchID = $prev = $bookType = "";
 
             if($site == "buchedit") {
-                $buchID = isset($_GET['bookid']) ? htmlentities($_GET['bookid']) : null;
+                $buchID = isset($_GET['buchid']) ? htmlentities($_GET['buchid']) : null;
 
                 if($buchID == null) {
                     include_once 'error/not_allowed.html';
@@ -30,14 +30,14 @@
 
         $bookArray = array(
             "isbn" => "",
-            "title" => "",
-            "description" => "",
+            "titel" => "",
+            "kurz_beschr" => "",
             "cover" => "",
             "genre" => "",
-            "nrOfPages" => -1,
-            "price" => -1,
-            "releaseYear" => -1,
-            "noveltyStatus" => -1
+            "seiten_anz" => -1,
+            "preis" => -1,
+            "ersch_jahr" => -1,
+            "neu_ersch" => -1
             );
             // Assign variable for security reasons.
             // Numbers only can be positive, so for control reasons
@@ -51,36 +51,37 @@
                 }
 
                 if(isset($_POST['title'])) {
-                    $bookArray["title"] = sanitizeInput($_POST['title']);
+                    $bookArray["titel"] = sanitizeInput($_POST['title']);
                 }
 
                 if(isset($_POST['description'])) {
-                    $bookArray["description"] = sanitizeInput($_POST['description']);
+                    $bookArray["kurz_beschr"] = sanitizeInput($_POST['description']);
                 }
 
                 if(isset($_POST['cover'])) {
-                    $bookArray["coverImage"] = sanitizeInput($_POST['cover']);
+                    $bookArray["cover"] = sanitizeInput($_POST['cover']);
                 }
 
                 if(isset($_POST['genre'])) {
                     $bookArray["genre"] = sanitizeInput($_POST['genre']);
                 }
 
-                if(!is_string($_POST['nr_of_pages'])) {
-                    $bookArray["nrOfPages"] = $_POST['nr_of_pages'];
+                if(isset($_POST['nr_of_pages'])) {
+                    $bookArray["seiten_anz"] = (int) sanitizeInput($_POST['nr_of_pages']);
                 }
 
-                if(!is_string($_POST['price'])) {
-                    $bookArray["price"] = $_POST['price'];
+                if(isset($_POST['price'])) {
+                    $bookArray["seiten_anz"] = (int) sanitizeInput($_POST['price']);
                 }
 
-                if(!is_string($_POST['release_year'])) {
-                    $bookArray["releaseYear"] = $_POST['release_year'];
+                if(isset($_POST['release_year'])) {
+                    $bookArray["seiten_anz"] = (int) sanitizeInput($_POST['release_year']);
                 }
 
-                if(!is_string($_POST['novelty_status'])) {
-                    $bookArray["noveltyStatus"] = $_POST['novelty_status'];
+                if(isset($_POST['novelty_status'])) {
+                    $bookArray["seiten_anz"] = (int) sanitizeInput($_POST['novelty_status']);
                 }
+
             }
 
 
@@ -95,8 +96,7 @@
                         echo "<h1>Fehler!</h1>";
                         echo "<h2>Das Buch wurde leider nicht bearbeitet.</h2>";
                     }
-                    break;
-                case "neues-buch":
+                    
                     break;
             }
 

@@ -12,6 +12,8 @@
 
             $bookHandler = new BookHandler();
             $bookID = isset($_GET['buchid']) ? htmlentities($_GET['buchid']) : null;
+            $type = validateBookType();
+            $prev = previousSite();
 
             if($bookID == null || !is_numeric($bookID)) {
                 include_once 'error/not_allowed.php';
@@ -41,7 +43,11 @@
 
                 <!-- Form for editing a book. It will contain the actual data for overview. -->
                 <form method="post"
-                      action="index.php?site=buch-absenden&prev=buchedit&buchid=<?php echo htmlentities($book['BUCH_ID']); ?>"
+                      action="<?php echo "index.php?site=buch-absenden" .
+                                        "&op=buchedit" .
+                                        "&prev={$prev}" .
+                                        "&type={$type["shortname"]}" .
+                                        "&buchid=" . htmlentities($book['BUCH_ID']); ?>"
                       class="mb-4">
 
                     <!-- Change ISBN number -->

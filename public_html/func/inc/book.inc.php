@@ -62,7 +62,7 @@
         $siteNames = array("buecher", "buchdetail");
         $siteName = isset($_GET['prev']) ? htmlentities($_GET['prev']) : null;
 
-        if($siteName != null && !in_array($siteName, $siteNames)) {
+        if($siteName == null && !in_array($siteName, $siteNames)) {
             include_once 'error/not_allowed.html';
             exit;
         }
@@ -77,15 +77,15 @@
         $clean = array();
 
         $siteTypes = array("buchedit", "neues-buch");
-        $siteType = isset($_GET['site']) ? htmlentities($_GET['site']) : null;
+        $siteType = isset($_GET['op']) ? htmlentities($_GET['op']) : null;
 
         if($siteType != null && !in_array($siteType, $siteTypes)) {
             include_once 'error/not_allowed.html';
             exit;
         }
         else {
-            $clean['site'] = $siteType;
+            $clean['op'] = $siteType;
         }
 
-        return $clean['site'];
+        return $clean['op'];
     }

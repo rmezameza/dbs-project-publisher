@@ -80,15 +80,19 @@ class BookHandler
             return false;
         }
 
-        if($bookArray['isbn'] != "") {
-            $affectedColumns .= "isbn = {$bookArray['isbn']}";
-        }
+        foreach($bookArray as $columName => $value) {
+            if($columName == "isbn") {
+                if ($bookArray['isbn'] != "") {
+                    $affectedColumns .= "isbn = {$bookArray['isbn']}";
+                }
+                continue;
+            }
 
-        if($bookArray['title'] != "") {
-            $affectedColumns .= (($affectedColumns == "") ? "titel" : ", titel") . " = {$bookArray['title']}";
-        }
+            if($value != "" && $value != -1) {
+                $affectedColumns .= (($affectedColumns == "") ? "{$columName}" : ", {$columName}") . " = {$value}";
+            }
 
-        if($bookArray[''])
+        }
 
         return $this->databaseHelper->sqlEditData($tableName, $affectedColumns, $condition);
     }

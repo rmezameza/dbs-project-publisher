@@ -10,7 +10,7 @@
         $content = "";
         $clean = array();
 
-        $siteCodes = array(null, "buecher", "buchdetail", "neues-buch", "buchedit", "authors");
+        $siteCodes = array(null, "buecher", "buchdetail", "neues-buch", "buch-absenden", "buchedit", "authors");
         $site = isset($_GET['site']) ? htmlentities($_GET['site']) : null;
 
         if(!in_array($site, $siteCodes)) {
@@ -33,6 +33,9 @@
                 break;
             case "buchedit":
                 $content = "content/books/book_edit.php";
+                break;
+            case "buch-absenden":
+                $content = "content/books/book_submit.php";
                 break;
             case "authors":
                 $content = "content/authors/author.php";
