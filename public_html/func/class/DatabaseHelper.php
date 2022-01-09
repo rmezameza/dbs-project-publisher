@@ -79,4 +79,14 @@
 
             return $result;
         }
+
+        public function sqlDeleteData($tableName, $condition) : bool {
+            $sql = "DELETE FROM {$tableName} WHERE {$condition}";
+            $statement = oci_parse($this->conn, $sql);
+
+            $result = oci_execute($statement) && oci_commit($this->conn);
+            oci_free_statement($statement);
+
+            return $result;
+        }
     }

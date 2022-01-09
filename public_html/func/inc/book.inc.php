@@ -76,7 +76,7 @@
     function validateSitesForSubmit() : string {
         $clean = array();
 
-        $siteTypes = array("buchedit", "neues-buch");
+        $siteTypes = array("buchedit", "neues-buch", "buch-loeschen");
         $siteType = isset($_GET['op']) ? htmlentities($_GET['op']) : null;
 
         if($siteType != null && !in_array($siteType, $siteTypes)) {

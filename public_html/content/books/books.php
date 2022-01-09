@@ -75,7 +75,13 @@
                                 </div>
                                 <div class="d-flex flex-row-reverse">
                                     <div class="p-2">
-                                        <p>Delete</p>
+                                        <p>
+                                            <a class="link-dark"
+                                               onClick="return confirm('Das Buch >><?php echo $book['TITEL']; ?><< wirklich löschen?')"
+                                               href="index.php?site=buch-absenden&op=buch-loeschen&type=<?php echo $sqlName; ?>&buchid=<?php echo $book['BUCH_ID']; ?>">
+                                                Delete
+                                            </a>
+                                        </p>
                                     </div>
                                     <div class="p-2">
                                         <p>

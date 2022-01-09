@@ -118,8 +118,6 @@ class BookHandler
             }
         }
 
-        var_dump($affectedColumns);
-        var_dump($values);
         return $this->databaseHelper->sqlAddData($tableName, $affectedColumns, $values);
     }
 
@@ -135,5 +133,12 @@ class BookHandler
         }
 
         return true;
+    }
+
+    public function deleteBook($bookID) : bool {
+        $tableName = "buch";
+        $condition = "buch_id = {$bookID}";
+
+        return $this->databaseHelper->sqlDeleteData($tableName, $condition);
     }
 }
