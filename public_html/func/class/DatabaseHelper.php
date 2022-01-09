@@ -43,12 +43,16 @@
         }
 
 
-        public function sqlGetData($columnNames, $tableName, $conditions) {
+        public function sqlGetData($columnNames, $tableName, $conditions, $order) {
             $res = null;
             $sql = "SELECT {$columnNames} FROM {$tableName}";
 
             if($conditions) {
                 $sql .= " WHERE {$conditions}";
+            }
+
+            if($order) {
+                $sql .= " ORDER BY {$order}";
             }
 
             $statement = oci_parse($this->conn, $sql);

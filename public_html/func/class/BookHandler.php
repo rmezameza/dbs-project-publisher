@@ -10,10 +10,9 @@ class BookHandler
     }
 
     // Get all books of a specific type (genre / novelty)
-    public function getAllBooks($type) {
+    public function getAllBooks($type, $order) {
         $columnNames = "*";
         $tableName = "buch";
-        $condition = "";
 
         switch($type) {
             case "neu":
@@ -41,11 +40,11 @@ class BookHandler
                 $condition = "genre = 'kids'";
                 break;
             default:
-                $condition = null;
+                $condition = "";
                 break;
         }
 
-        return $this->databaseHelper->sqlGetData($columnNames, $tableName, $condition);
+        return $this->databaseHelper->sqlGetData($columnNames, $tableName, $condition, $order);
     }
 
     public function getSpecificBook($bookID) {
@@ -61,7 +60,7 @@ class BookHandler
         $tableName = "view_authors_for_book";
         $condition = "buch_id = {$bookID}";
 
-        return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition);
+        return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition, null);
     }
 
     public function editBook($buchID, $bookArray) : bool {

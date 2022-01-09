@@ -28,7 +28,7 @@
         <div class="container">
             <?php
 
-                $books = $bookHandler->getAllBooks($sqlName);
+                $books = $bookHandler->getAllBooks($sqlName, null);
 
                 if(!$books) {
                     echo "<h2 class='h2 mt-4'>Derzeit keine Bücher vorhanden.</h2>";
