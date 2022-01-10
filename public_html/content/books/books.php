@@ -39,8 +39,15 @@
             ?>
                         <div class="row mb-5">
                             <div class="col col-lg-4">
-                                <img class="img-fluid" width="80%"
-                                     src="img/book_covers/<?php echo $book['COVER']; ?>"
+                                <img class="img-fluid custom-image-class"
+                                     src="img/book_covers/<?php
+                                                                if($book['COVER'] == null) {
+                                                                    echo "book_cover_na.jpg";
+                                                                }
+                                                                else {
+                                                                    echo $book['COVER'];
+                                                                }
+                                                           ?>"
                                      alt="<?php echo $book['TITEL']; ?>">
                             </div>
                             <div class="col col-lg-6">
@@ -69,6 +76,9 @@
                                     <p><?php
                                             if($book['KURZ_BESCHR']) {
                                                 echo shortText($book['KURZ_BESCHR'], 200);
+                                            }
+                                            else {
+                                                echo "Momentan keine Kurzbeschreibung vorhanden.";
                                             }
                                        ?>
                                     </p>
@@ -104,7 +114,7 @@
                                 </div>
                             </div>
                         </div>
-                        <hr class="text-decoration-line-through mt-3"
+                        <hr class="text-decoration-line-through mt-3">
             <?php
                     endforeach;
                 }

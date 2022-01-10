@@ -65,11 +65,19 @@
                         <div class="col-lg-4">
                             <div class="row mb-4">
                                 <div class="col">
-                                    <img class="img-fluid" src="img/book_covers/<?php echo $book['COVER']; ?>"
+                                    <img class="img-fluid" src="img/book_covers/<?php
+                                                                                    if($book['COVER'] == null) {
+                                                                                        echo "book_cover_na.jpg";
+                                                                                    }
+                                                                                    else {
+                                                                                        echo $book['COVER'];
+                                                                                    }
+                                                                                 ?>"
                                          alt="Buchcover" width="80%">
                                 </div>
                             </div>
                             <div class="row">
+                                <!-- TODO: Fix the problem with mobile view
                                 <div class="col-lg-5">
                                     <p>
                                         ISBN:<br />
@@ -80,20 +88,54 @@
                                         Genre:
                                     </p>
                                 </div>
-                                <div class="col-lg-5">
+                                -->
+                                <div class="col">
                                     <p>
-                                        <?php echo $book['ISBN']; ?><br />
-                                        <?php echo $book['SEITEN_ANZ']; ?><br />
-                                        <?php echo $book['PREIS']; ?> Euro<br />
-                                        <?php echo $book['SEITEN_ANZ']; ?><br />
-                                        <?php echo $book['ERSCH_JAHR']; ?><br />
-                                        <?php echo "bahoe " . $book['GENRE']; ?>
+                                        <?php
+                                            if($book['ISBN']) {
+                                                echo $book['ISBN'] . "<br>";
+                                            }
+                                            else {
+                                                echo "Keine ISBN Nummer zugewiesen. <br>";
+                                            }
+
+                                            if($book['SEITEN_ANZ']) {
+                                                echo $book['SEITEN_ANZ'] . " Seiten <br>";
+                                            }
+                                            else {
+                                                echo "Seitenanzahl nicht bekannt. <br>";
+                                            }
+
+                                            if($book['Preis']) {
+                                                echo $book['PREIS'] . " Euro <br>";
+                                            }
+                                            else {
+                                                echo "Kein Preis vergeben. <br>";
+                                            }
+
+                                            if($book['ERSCH_JAHR']) {
+                                                echo $book['ERSCH_JAHR'] . " (Erscheinungsdatum) <br>";
+                                            }
+                                            else {
+                                                echo "Erscheinungsdatum unbekannt. <br>";
+                                            }
+
+                                            echo "Genre ist >>bahoe " . $book['GENRE'] . "<<";
+                                        ?>
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="col">
-                            <p><?php echo $book['KURZ_BESCHR']; ?></p>
+                            <p><?php
+                                    if($book['KURZ_BESCHR']) {
+                                        echo $book['KURZ_BESCHR'];
+                                    }
+                                    else {
+                                        echo "Momentan ist keine Buchbeschreibung vorhanden.";
+                                    }
+                               ?>
+                            </p>
                         </div>
                     </div>
             <?php

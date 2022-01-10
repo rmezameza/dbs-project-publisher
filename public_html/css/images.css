@@ -1,0 +1,9 @@
+.img-thumbnail {
+    width: 132px!important;
+    height: 220px!important;
+}
+
+.img-fluid.custom-image-class {
+    width: 132px!important;
+    height: 220px!important;
+}

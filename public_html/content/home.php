@@ -51,7 +51,7 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col">
-                                        <p><?php echo $books[$arraySize - 1]['TITEL']; ?></p>
+                                        <p><?php echo $books[$arraySize - 2]['TITEL']; ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -62,15 +62,21 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col">
-                                        <img src="img/book_covers/<?php echo $books[$arraySize - 3]['COVER']; ?>"
-                                             class="img-fluid"
+                                        <img src="img/book_covers/<?php
+                                                                    if($books[$arraySize - 3]['COVER'] == null) {
+                                                                        echo "book_cover_na.jpg";
+                                                                    }
+                                                                    else {
+                                                                        echo $books[$arraySize - 3]['COVER'];
+                                                                    }?>"
+                                             class="img-thumbnail"
                                              width="30%"
                                              alt="Coverbild vom Buch '<?php echo $books[$arraySize - 3]['TITEL']; ?>'">
                                     </div>
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col">
-                                        <p><?php echo $books[$arraySize - 1]['TITEL']; ?></p>
+                                        <p><?php echo $books[$arraySize - 3]['TITEL']; ?></p>
                                     </div>
                                 </div>
                             </div>

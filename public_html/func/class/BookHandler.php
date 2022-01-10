@@ -52,7 +52,7 @@ class BookHandler
         $tableName = "buch";
         $condition = "buch_id = {$bookID}";
 
-        return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition);
+        return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition, null);
     }
 
     public function getAuthorsForBook($bookID) {

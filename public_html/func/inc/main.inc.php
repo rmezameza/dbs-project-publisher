@@ -6,11 +6,13 @@
      * the direction of the given site / file to the variable 'content' and it returns to index.php
      * where it will be shown in the proper div / box.
      */
+
     function validateUrlInput() {
         $content = "";
         $clean = array();
 
-        $siteCodes = array(null, "buecher", "buchdetail", "neues-buch", "buch-absenden", "buchedit", "authors");
+        $siteCodes = array(null, "buecher", "buchdetail", "neues-buch",
+                            "buch-absenden", "buchedit", "autoren", "autor-detail");
         $site = isset($_GET['site']) ? htmlentities($_GET['site']) : null;
 
         if(!in_array($site, $siteCodes)) {
@@ -37,8 +39,11 @@
             case "buch-absenden":
                 $content = "content/books/book_submit.php";
                 break;
-            case "authors":
-                $content = "content/authors/author.php";
+            case "autoren":
+                $content = "content/authors/authors.php";
+                break;
+            case "autor-detail":
+                $content = "content/authors/author_detail.php";
                 break;
             default:
                 $content = "content/home.php";
