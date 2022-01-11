@@ -11,9 +11,9 @@
                 include_once 'func/class/AuthorHandler.php';
 
                 $authorHandler = new AuthorHandler();
-                $authors = $authorHandler->getAllAuthorsSortedByName();
+                $authors = $authorHandler->getAllAuthorsSortedByName(null);
 
-                $alphArray = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
+                //$alphArray = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
                 $count = 0;
 
                 $letter = strtoupper(substr($authors[$count]['AU_NACHNAME'], 0, 1));

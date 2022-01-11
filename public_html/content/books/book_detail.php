@@ -53,7 +53,12 @@
                                 if ($count > 0) {
                                     echo ", ";
                                 }
+
+                                echo "<a href='index.php?site=autor-detail&autorid={$author['AUTOR_ID']}'
+                                                             class='link-dark'
+                                                             title='{$author['AU_VORNAME']} {$author['AU_NACHNAME']}'>";
                                 echo $author['AU_VORNAME'] . " " . $author['AU_NACHNAME'];
+                                echo "</a>";
 
                                 ++$count;
                             endforeach;
