@@ -8,11 +8,27 @@
             <div class="container mt-5 border border-2 border-dark rounded rounded-3">
                 <?php
                     include_once 'func/class/BookHandler.php';
+                    include_once 'func/class/BookstoreHandler.php';
 
                     $bookHandler = new BookHandler();
+                    $bookstoreHandler = new BookstoreHandler();
 
                     $books = $bookHandler->getAllBooks(null, "buch_id DESC");
                     $arraySize = count($books);
+
+                    $storeArray = $bookstoreHandler->getAllOrSpecificBookStores(null);
+
+                    $totalCapacity = 0;
+                    $totalBooks = 0;
+                    $totalBooksInPercent = 0.0;
+
+                    foreach($storeArray as $store) :
+                        $totalCapacity += $store['GESAMTKAPAZITAET'];
+                        $totalBooks += $store['GESAMTBUECHER'];
+                    endforeach;
+
+                    $totalBooksInPercent = (100 / $totalCapacity) * $totalBooks;
+
                     $count = 0;
 
                    if($arraySize > 0) {
@@ -96,16 +112,24 @@
 
                 <!-- This row shows the status of the total capacity and amount of books of all warehouses. -->
                 <!-- And it shows the capacity and number of books in every warehouse -->
-                <div class="row">
-                    <div class="row">
-                        <h2 class="h2 mt-5">Status der Buchlager:</h2>
-                    </div>
-                    <div class="col">Status der gesamten Buchlager:</div>
-
-                    <!-- TODO: I want to insert sql rows for every book warehouse -->
-                    <div class="row mb-3">
-                        <div class="col">Status von </div>
-                    </div>
+                <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="h2">Status aller Buchlager:</h2>
+                        </div>
+                        <div class="col">
+                            <?php echo $totalBooks . " / " . $totalCapacity . " Bücher"; ?>
+                        </div>
+                        <div class="col">
+                            <div class="progress" style="width: 75%;">
+                                <div class="progress-bar progress-bar-striped"
+                                     role="progressbar"
+                                     style="width: <?php echo $totalBooksInPercent; ?>%"
+                                     aria-valuenow="<?php echo $totalBooksInPercent; ?>"
+                                     aria-valuemin = "0"
+                                     aria-valuemax= "100">
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
     </body>
