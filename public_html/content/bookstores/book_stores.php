@@ -10,7 +10,7 @@
                 include_once 'func/class/BookstoreHandler.php';
 
                 $bookstoreHandler = new BookstoreHandler();
-                $storeArray = $bookstoreHandler->getAllOrSpecificBookStores(null);
+                $storeArray = $bookstoreHandler->getBookstoreAndCapacity(null);
 
                 $totalCapacity = 0;
                 $totalBooks = 0;
@@ -25,7 +25,10 @@
 
 
             <h1 class="mb-5">Buchlager</h1>
-            <h2>Gesamtstatus aller Buchlager</h2>
+            <a class="btn btn-secondary" href="index.php?site=buchlager-buecheranzahl-bearbeiten" title="Buchlager - Buchanzahl bearbeiten">
+                Buchanzahl bearbeiten
+            </a>
+            <h2 class="mt-5">Gesamtstatus aller Buchlager</h2>
             <p>Momentan gibt es insgesamt <?php echo $totalBooks . " Bücher bei einer Gesamtkapazität für " . $totalCapacity . " Bücher"; ?></p>
             <div class="progress" style="width: 50%;">
                 <div class="progress-bar progress-bar-striped"
@@ -54,6 +57,9 @@
                         </a>
                     </div>
                     <div class="col">
+                        <?php echo $store['GESAMTBUECHER'] . " / " . $store['GESAMTKAPAZITAET'] ?>
+                    </div>
+                    <div class="col">
                         <div class="progress" style="width: 25%;">
                             <div class="progress-bar progress-bar-striped"
                                  role="progressbar"
@@ -64,6 +70,7 @@
                         </div>
                     </div>
                 </div>
+                <hr class="text-decoration-line-through">
             <?php endforeach; ?>
         </div>
     </body>

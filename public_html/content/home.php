@@ -16,7 +16,7 @@
                     $books = $bookHandler->getAllBooks(null, "buch_id DESC");
                     $arraySize = count($books);
 
-                    $storeArray = $bookstoreHandler->getAllOrSpecificBookStores(null);
+                    $storeArray = $bookstoreHandler->getBookstoreAndCapacity( null);
 
                     $totalCapacity = 0;
                     $totalBooks = 0;

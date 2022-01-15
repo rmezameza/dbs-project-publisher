@@ -12,7 +12,8 @@
         $clean = array();
 
         $siteCodes = array(null, "buecher", "buchdetail", "neues-buch",
-                            "buch-absenden", "buchedit", "autoren", "autor-detail", "buchlager", "buchlager-detail");
+                            "buch-absenden", "buchedit", "autoren", "autor-detail", "buchlager", "buchlager-detail",
+                            "buchlager-buecheranzahl-bearbeiten", "buecher-ins-buchlager");
         $site = isset($_GET['site']) ? htmlentities($_GET['site']) : null;
 
         if(!in_array($site, $siteCodes)) {
@@ -50,6 +51,12 @@
                 break;
             case "buchlager-detail":
                 $content = "content/bookstores/bookstore_detail.php";
+                break;
+            case "buchlager-buecheranzahl-bearbeiten":
+                $content = "content/bookstores/bookstore_rack_edit_book_number.php";
+                break;
+            case "buecher-ins-buchlager":
+                $content = "content/bookstores/bookstore_submit.php";
                 break;
             default:
                 $content = "content/home.php";

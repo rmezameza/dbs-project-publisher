@@ -127,22 +127,15 @@
                     <div class="mb-3">
                         <p class="pt-2">Neuerscheinung</p>
                         <div class="form-check">
-                            <?php
-                                $checkNoveltyStatus = false;
-
-                                if($book['NEU_ERSCH'] > 0) {
-                                    $checkNoveltyStatus = true;
-                                }
-                            ?>
                             <input class="form-check-input" type="radio" name="novelty_status"
-                                   id="change_novelty_status_yes" <?php if($checkNoveltyStatus) { echo "checked"; } ?>>
+                                   id="change_novelty_status_yes" value="1" <?php if($book['NEU_ERSCH'] > 0) { echo "checked"; } ?>>
                             <label class="form-check-label" for="change_novelty_status_yes">
                                 Ja
                             </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="novelty_status"
-                                   id="change_novelty_status_no" <?php if(!$checkNoveltyStatus) { echo "checked"; } ?>>
+                                   id="change_novelty_status_no" value="0" <?php if(!($book['NEU_ERSCH'] > 0)) { echo "checked"; } ?>>
                             <label class="form-check-label" for="change_novelty_status_no">
                                 Nein
                             </label>

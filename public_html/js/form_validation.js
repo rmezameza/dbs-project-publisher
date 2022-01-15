@@ -21,3 +21,8 @@
             }, false)
         })
 })()
+
+
+function takeGenreValue(bookID) {
+    var e = document.getElementById("")
+}

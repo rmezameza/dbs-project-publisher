@@ -93,4 +93,29 @@
 
             return $result;
         }
+
+        public function sqlProcedureOneInputOutput($procedureName, $inputData) {
+            $sql = "BEGIN {$procedureName}(:input_data, :output_data); END;";
+            $statement = oci_parse($this->conn, $sql);
+
+            oci_bind_by_name($statement, ':input_data', $inputData, 100);
+            oci_bind_by_name($statement, ':output_data', $outputData, 100);
+
+            oci_execute($statement);
+
+            return $outputData;
+        }
+
+        public function sqlProcedureTwoInputOneOutput($procedureName, $inputDataOne, $inputDataTwo) {
+            $sql = "BEGIN {$procedureName}(:input_data_one, :input_data_two, :output_data); END;";
+            $statement = oci_parse($this->conn, $sql);
+
+            oci_bind_by_name($statement, ':input_data_one', $inputDataOne, 100);
+            oci_bind_by_name($statement, 'input_data_two', $inputDataTwo, 100);
+            oci_bind_by_name($statement, ':output_data', $outputData, 100);
+
+            oci_execute($statement);
+
+            return $outputData;
+        }
     }

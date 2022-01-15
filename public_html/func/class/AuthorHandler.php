@@ -27,4 +27,8 @@
 
             return $this->databaseHelper->sqlGetData($columnNames, $tableName, $condition, null);
         }
+
+        public function fullAuthorName($authorID) {
+            return $this->databaseHelper->sqlProcedureOneInputOutput("buchautor", $authorID);
+        }
     }

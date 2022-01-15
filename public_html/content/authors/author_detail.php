@@ -24,7 +24,7 @@
 
             //foreach($authorArray as $author) :
                 ?>
-                <h1><?php echo $authorArray[0]['AU_VORNAME'] . " " . $authorArray[0]['AU_NACHNAME']; ?></h1>
+                <h1><?php echo $authorHandler->fullAuthorName($authorID); ?></h1>
                 <h2 class="mt-5">Biographie:</h2>
                 <p><?php echo $authorArray[0]['BIO']; ?></p>
                 <h2 class="mt-5">Bücher:</h2>
