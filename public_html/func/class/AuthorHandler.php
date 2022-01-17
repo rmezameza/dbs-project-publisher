@@ -31,4 +31,19 @@
         public function fullAuthorName($authorID) {
             return $this->databaseHelper->sqlProcedureOneInputOutput("buchautor", $authorID);
         }
+
+        public function deleteAuthor($authorID) : bool {
+            $tableName = "autor";
+            $condition = "autor_id = {$authorID}";
+
+            return $this->databaseHelper->sqlDeleteData($tableName, $condition);
+        }
+
+        public function getSpecificAuthor($authorID) {
+            $columnName = "*";
+            $tableName = "autor";
+            $condition = "autor_id = {$authorID}";
+
+            return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition, null);
+        }
     }
