@@ -46,4 +46,46 @@
 
             return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition, null);
         }
+
+        public function editAuthor($authorID, $authorArray) {
+            $tableName = "autor";
+            $affectedColumns = "";
+            $condition = "autor_id = {$authorID}";
+
+            if(!$this->checkAuthorArrayEmpty($authorArray)) {
+                return false;
+            }
+
+            foreach($authorArray as $columName => $value) {
+                if($columName == "forename") {
+                    if ($authorArray['forename'] != "") {
+                        $affectedColumns .= "author = '{$authorArray['forename']}'";
+                    }
+                    continue;
+                }
+
+                if($value != "") {
+                    $affectedColumns .= (($affectedColumns == "") ? "{$columName}" : ", {$columName}") . " = '{$value}'";
+                }
+
+            }
+
+            return $this->databaseHelper->sqlEditData($tableName, $affectedColumns, $condition);
+        }
+
+        private function checkAuthorArrayEmpty($authorArray) : bool {
+            $count = 0;
+
+            foreach($authorArray as $key => $val) {
+                if($val == "" || $val == -1) {
+                    ++$count;
+                }
+            }
+
+            if($count == count($authorArray)) {
+                return false;
+            }
+
+            return true;
+        }
     }

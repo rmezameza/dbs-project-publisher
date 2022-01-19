@@ -12,7 +12,7 @@
         $clean = array();
 
         $siteCodes = array(null, "buecher", "buchdetail", "neues-buch",
-                            "buch-absenden", "buchedit", "autoren", "autor-detail", "autor-absenden",
+                            "buch-absenden", "buchedit", "autoren", "autor-detail", "autor-absenden", "autoredit",
                             "buchlager", "buchlager-detail", "buchlager-buecheranzahl-bearbeiten",
                             "buecher-ins-buchlager");
         $site = isset($_GET['site']) ? htmlentities($_GET['site']) : null;
@@ -49,6 +49,9 @@
                 break;
             case "autor-absenden":
                 $content = "content/authors/author_submit.php";
+                break;
+            case "autoredit":
+                $content = "content/authors/author_edit.php";
                 break;
             case "buchlager":
                 $content = "content/bookstores/book_stores.php";

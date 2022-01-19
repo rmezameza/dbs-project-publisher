@@ -6,7 +6,8 @@
 
     <body>
         <?php
-            include_once 'func/class/AutorHandler.php';
+            include_once 'func/class/AuthorHandler.php';
+            include_once 'func/inc/sec.inc.php';
             $authorHandler = new AuthorHandler();
 
             $authorID = isset($_GET['autorid']) ? htmlentities($_GET['autorid']) : null;
@@ -28,15 +29,45 @@
                     echo "<h2>Der / Die Autor:in '$authorName' wurde leider nicht gelöscht.</h2>";
                 }
             }
+            else if($op = "autor-detail") {
+
+                $authorArray = array();
+
+                if($_SERVER['REQUEST_METHOD'] == "POST") {
+                    if(isset($_POST['forename'])) {
+                        $authorArray['forename'] = sanitizeInput($_POST['forename']);
+                    }
+
+                    if(isset($_POST['surname'])) {
+                        $authorArray['surname'] = sanitizeInput($_POST['surname']);
+                    }
+
+                    if(isset($_POST['biography'])) {
+                        $authorArray['bio'] = sanitizeInput($_POST['biography']);
+                    }
+                }
+
+                if($authorHandler->editAuthor($authorID, $authorArray)) {
+                    echo "<h1>Geschafft!</h1>";
+                    echo "<h2>Der / Die Autor:in '{$authorHandler->fullAuthorName($authorID)}' wurde erfolgreich bearbeitet.</h2>";
+                }
+                else {
+                    echo "<h1>Fehler!</h1>";
+                    echo "<h2>Der / Die Autor:in '{$authorHandler->fullAuthorName(($authorID))}' wurde leider nicht bearbeitet.</h2>";
+                }
+            }
         ?>
+
         <a class="btn btn-secondary" href="index.php?site=<?php
-                                                                if($op = "delete") {
-                                                                    echo "autor" . " title='Zurück zu Autor:innen'";
+                                                                if($op == "delete") {
+                                                                    echo "autor"; ?>" title="Zurück zu Autor:innen">
+                                                                <?php
                                                                 }
-                                                                else if($op = "autoredit") {
-                                                                    echo "autor-deatil&{$authorID}" . " title=Zurück zu {$authorName}";
+                                                                else if($op == "autor-detail") {
+                                                                    echo "autor-detail&autorid={$authorID}"; ?>" title="Zurück zu <?php echo $authorName; ?>">
+                                                                <?php
                                                                 }
-                                                           ?>">
+                                                                ?>
             Zurück
         </a>
     </body>
