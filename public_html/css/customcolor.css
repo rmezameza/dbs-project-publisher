@@ -1,0 +1,12 @@
+.navbar {
+    background: rgb(160, 165, 175) !important;
+    font-weight: bold;
+}
+
+body {
+    background: rgba(239, 240, 243, 0.8) !important;;
+}
+
+.progress {
+    background: rgba(169, 166, 166, 0.7) !important;
+}

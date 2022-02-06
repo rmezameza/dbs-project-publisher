@@ -11,7 +11,6 @@
 
                 $bookstoreHandler = new BookstoreHandler();
                 $storeArray = $bookstoreHandler->getBookstoreAndCapacity(null);
-
                 $totalCapacity = 0;
                 $totalBooks = 0;
 
@@ -43,10 +42,15 @@
                 Liste der Buchlager:
             </h2>
             <?php
+            $actualStore = array();
 
-
-                foreach($storeArray as $store) :
+            foreach($storeArray as $store) :
+                if(!is_null($store['GESAMTBUECHER']) && !is_null($store['GESAMTKAPAZITAET'])) {
                     $actualBooksInPercentOneBookstore = (100 / $store['GESAMTKAPAZITAET']) * $store['GESAMTBUECHER'];
+                }
+                else {
+                    $actualBooksInPercentOneBookstore = null;
+                }
             ?>
                 <div class="row">
                     <div class="col">
@@ -57,7 +61,14 @@
                         </a>
                     </div>
                     <div class="col">
-                        <?php echo $store['GESAMTBUECHER'] . " / " . $store['GESAMTKAPAZITAET'] ?>
+                        <?php
+                            if(is_null($actualBooksInPercentOneBookstore)) {
+                                echo "Keine Bücher vorhanden";
+                            }
+                            else {
+                                echo $store['GESAMTBUECHER'] . " / " . $store['GESAMTKAPAZITAET'];
+                            }
+                        ?>
                     </div>
                     <div class="col">
                         <div class="progress" style="width: 25%;">
@@ -68,6 +79,13 @@
                                  aria-valuemin="0"
                                  aria-valuemax="100"></div>
                         </div>
+                    </div>
+                    <div class="col">
+                        <a class="link-dark"
+                           onClick="return confirm('Das Buchlager >><?php echo $store['LAG_STRASSE']; ?><< wirklich löschen?')"
+                           href="index.php?site=buchlager-submit&op=buchlager-loeschen&bookstoreid=<?php echo $store['LAG_ID']; ?>">
+                            Löschen
+                        </a>
                     </div>
                 </div>
                 <hr class="text-decoration-line-through">

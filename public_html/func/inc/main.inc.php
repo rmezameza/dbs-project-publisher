@@ -12,9 +12,9 @@
         $clean = array();
 
         $siteCodes = array(null, "buecher", "buchdetail", "neues-buch",
-                            "buch-absenden", "buchedit", "autoren", "autor-detail", "autor-absenden", "autoredit",
-                            "buchlager", "buchlager-detail", "buchlager-buecheranzahl-bearbeiten",
-                            "buecher-ins-buchlager");
+                            "buch-absenden", "buchedit", "autoren", "autor-detail", "autor-absenden", "autoredit", "neuer-autor",
+                            "buchlager", "buchlager-detail", "buchlager-buecheranzahl-bearbeiten", "buchlager-submit",
+                            "buecher-ins-buchlager", "neues-regal", "buchlager-edit", "neues-buchlager", "buch-autor-zuweisung");
         $site = isset($_GET['site']) ? htmlentities($_GET['site']) : null;
 
         if(!in_array($site, $siteCodes)) {
@@ -53,6 +53,12 @@
             case "autoredit":
                 $content = "content/authors/author_edit.php";
                 break;
+            case "neuer-autor":
+                $content = "content/authors/author_create.php";
+                break;
+            case "buch-autor-zuweisung":
+                $content = "content/authors/author_book_assign.php";
+                break;
             case "buchlager":
                 $content = "content/bookstores/book_stores.php";
                 break;
@@ -63,6 +69,18 @@
                 $content = "content/bookstores/bookstore_rack_edit_book_number.php";
                 break;
             case "buecher-ins-buchlager":
+                $content = "content/bookstores/bookstore_edit_rack_submit.php";
+                break;
+            case "neues-regal":
+                $content = "content/bookstores/rack_create.php";
+                break;
+            case "neues-buchlager":
+                $content = "content/bookstores/bookstore_create.php";
+                break;
+            case "buchlager-edit":
+                $content = "content/bookstores/bookstore_edit.php";
+                break;
+            case "buchlager-submit":
                 $content = "content/bookstores/bookstore_submit.php";
                 break;
             default:

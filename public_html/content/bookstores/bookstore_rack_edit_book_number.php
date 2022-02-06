@@ -30,7 +30,7 @@
                         <option selected disabled="disabled">Bitte Buchlager auswählen</option>
                         <?php
                             foreach($bookstores as $store) {
-                                if(($store['GESAMTBUECHER'] + 100) >= $store['GESAMTKAPAZITAET']) {
+                                if(($store['GESAMTBUECHER'] + 100) >= $store['GESAMTKAPAZITAET'] && $store['GESAMTBUECHER'] != 0 &&$store['GESAMTKAPAZITAET'] != 0 ) {
                         ?>
                                     <option value="<?php echo $store['LAG_ID']; ?>" disabled="disabled">
                                         <?php echo $store['LAG_STRASSE'] . ", " . $store['LAG_PLZ'] . " " . $store['LAG_ORT']; ?>

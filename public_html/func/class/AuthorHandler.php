@@ -29,7 +29,7 @@
         }
 
         public function fullAuthorName($authorID) {
-            return $this->databaseHelper->sqlProcedureOneInputOutput("buchautor", $authorID);
+            return $this->databaseHelper->sqlProcedureOneInputOutput("procedure_concatenate_author_name", $authorID);
         }
 
         public function deleteAuthor($authorID) : bool {
@@ -47,7 +47,34 @@
             return $this->databaseHelper->sqlGetData($columnName, $tableName, $condition, null);
         }
 
-        public function editAuthor($authorID, $authorArray) {
+        public function addAuthor($authorArray) : bool{
+            $tableName = "autor";
+            $affectedColumns = "";
+            $values = "";
+
+            if(!$this->checkAuthorArrayEmpty($authorArray)) {
+                return false;
+            }
+
+            foreach($authorArray as $columnName => $value) {
+                if($columnName == "au_vorname") {
+                    if($value != "") {
+                        $affectedColumns .= $columnName;
+                        $values .= "'$value'";
+                    }
+                }
+                else {
+                    if ($value != "") {
+                        $affectedColumns .= (($affectedColumns == "") ? "{$columnName}" : ", {$columnName}");
+                        $values .= (($values == "") ? "'{$value}'" : ", '{$value}'");
+                    }
+                }
+            }
+
+            return $this->databaseHelper->sqlAddData($tableName, $affectedColumns, $values);
+        }
+
+        public function editAuthor($authorID, $authorArray) : bool {
             $tableName = "autor";
             $affectedColumns = "";
             $condition = "autor_id = {$authorID}";
@@ -87,5 +114,39 @@
             }
 
             return true;
+        }
+
+        public function getBooksNotFromAuthor($bookIDs) {
+            $tableName = "buch";
+            $columns = "isbn, buch_id, titel";
+            $condition = "";
+            $order = " titel ASC";
+
+            for($i = 0; $i < count($bookIDs); ++$i) {
+                if($i == 0) {
+                    $condition = "buch_id != {$bookIDs[$i]}";
+                }
+                else {
+                    $condition .= " AND buch_id != {$bookIDs[$i]}";
+                }
+            }
+
+            return $this->databaseHelper->sqlGetData($columns, $tableName, $condition, $order);
+        }
+
+        public function assignBook($authorID, $bookID) : bool {
+            $tableName = "schreibt";
+            $affectedColumns = "autor_id, buch_id";
+            $values = "{$authorID}, {$bookID}";
+
+
+            return $this->databaseHelper->sqlAddData($tableName, $affectedColumns, $values);
+        }
+
+        public function deleteBookFromAuthor($authorID, $bookID) : bool {
+            $tableName = "schreibt";
+            $condition = "autor_id = {$authorID} AND buch_id = {$bookID}";
+
+            return $this->databaseHelper->sqlDeleteData($tableName, $condition);
         }
     }

@@ -21,3 +21,10 @@ function sanitizeInput($inputData) : string {
 
     return $inputData;
 }
+
+function checkInputValueForNull($inputData) : void {
+    if(is_null($inputData)) {
+        include_once 'error/not_allowed.html';
+        exit;
+    }
+}

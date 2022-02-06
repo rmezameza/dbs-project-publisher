@@ -23,14 +23,13 @@
 
                 foreach($authorArray as $author) :
                     ?>
-                        <!
                         <div class="row text-center">
 
                         <!-- Form for editing a book. It will contain the actual data for overview. -->
                         <form method="post"
-                              action="<?php echo "index.php?site=autor-absenden&op=autor-detail" .
-                                  "&autorid=" . $authorID; ?>"
-                              class="mb-4">
+                          action="<?php echo "index.php?site=autor-absenden&op=autor-detail" .
+                              "&autorid=" . $authorID; ?>"
+                          class="mb-4">
 
                             <!-- Change Forename -->
                             <div class="mb-3">

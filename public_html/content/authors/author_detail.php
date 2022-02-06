@@ -30,7 +30,7 @@
                     <a class="link-dark"
                        onClick="return confirm('Den / Die Autor:in >><?php echo $authorFullName; ?><< wirklich löschen?')"
                        href="index.php?site=autor-absenden&op=delete&autorid=<?php echo $authorID; ?>&autorname=<?php echo $authorFullName; ?>">
-                        Delete
+                        Löschen
                     </a>
                 </div>
                 <div class="p-2">
@@ -38,7 +38,7 @@
                         <a class="link-dark"
                            href="index.php?site=autoredit&autorid=<?php echo $authorID ?>";
                            title="Autor:in bearbeiten">
-                            Edit
+                            Bearbeiten
                         </a>
                     </p>
                 </div>
@@ -46,7 +46,18 @@
             <h1><?php echo $authorFullName; ?></h1>
             <h2 class="mt-5">Biographie:</h2>
             <p><?php echo $authorArray[0]['BIO']; ?></p>
-            <h2 class="mt-5">Bücher:</h2>
+            <div class="row">
+                <div class="col">
+                    <h2 class="mt-5">Bücher:</h2>
+                </div>
+                <div class="col">
+                    <div class="d-flex flex-row-reverse">
+                        <div class="pt-5">
+                            <a class="link-dark" href="index.php?site=buch-autor-zuweisung&autorid=<?php echo $authorID; ?>">Buch hinzufügen</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row text-center">
                 <?php
                     foreach($booksArray as $book) :
@@ -69,7 +80,7 @@
                         </a>
                         <a class="link-dark"
                            onClick="return confirm('Das Buch >><?php echo $book['TITEL']; ?><< wirklich für diese:n Autor:in löschen?')"
-                           href="index.php?site=autor-absenden&op=buch-loeschen&buchid=<?php echo $book['BUCH_ID']; ?>">
+                           href="index.php?site=autor-absenden&op=buch-loeschen&autorid=<?php echo $authorID; ?>&buchid=<?php echo $book['BUCH_ID']; ?>">
                             Delete
                         </a>
                         </div>

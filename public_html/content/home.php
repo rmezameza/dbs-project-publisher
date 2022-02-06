@@ -41,60 +41,66 @@
                         </div>
                         <div class="row text-center">
                             <div class="col">
-                                <div class="row">
-                                        <div class="col">
-                                            <img src="img/book_covers/<?php echo $books[$arraySize - 1]['COVER']; ?>"
-                                                 class="img-thumbnail"
-                                                 width="30%"
-                                                 alt="Coverbild vom Buch '<?php echo $books[$arraySize - 1]['TITEL']; ?>'">
-                                        </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <p><?php echo $books[$arraySize - 1]['TITEL']; ?></p>
+                                <a class="link-dark" href="index.php?site=buchdetail&buchid=<?php echo $books[$arraySize - 1]['BUCH_ID']; ?>" title="Details zum Buch">
+                                    <div class="row">
+                                            <div class="col">
+                                                <img src="img/book_covers/<?php echo $books[$arraySize - 1]['COVER']; ?>"
+                                                     class="img-thumbnail"
+                                                     width="30%"
+                                                     alt="Coverbild vom Buch '<?php echo $books[$arraySize - 1]['TITEL']; ?>'">
+                                            </div>
                                     </div>
-                                </div>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <p><?php echo $books[$arraySize - 1]['TITEL']; ?></p>
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
                             <?php if($arraySize > 1) { ?>
                             <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <img src="img/book_covers/<?php echo $books[$arraySize - 2]['COVER']; ?>"
-                                             class="img-thumbnail"
-                                             width="30%"
-                                             alt="Coverbild vom Buch '<?php echo $books[$arraySize - 2]['TITEL']; ?>'">
+                                <a class="link-dark" href="index.php?site=buchdetail&buchid=<?php echo $books[$arraySize - 2]['BUCH_ID']; ?>" title="Details zum Buch">
+                                    <div class="row">
+                                        <div class="col">
+                                            <img src="img/book_covers/<?php echo $books[$arraySize - 2]['COVER']; ?>"
+                                                 class="img-thumbnail"
+                                                 width="30%"
+                                                 alt="Coverbild vom Buch '<?php echo $books[$arraySize - 2]['TITEL']; ?>'">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <p><?php echo $books[$arraySize - 2]['TITEL']; ?></p>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <p><?php echo $books[$arraySize - 2]['TITEL']; ?></p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <?php
                                 }
                                 if($arraySize > 2) {
                             ?>
                             <div class="col">
-                                <div class="row">
-                                    <div class="col">
-                                        <img src="img/book_covers/<?php
-                                                                    if($books[$arraySize - 3]['COVER'] == null) {
-                                                                        echo "book_cover_na.jpg";
-                                                                    }
-                                                                    else {
-                                                                        echo $books[$arraySize - 3]['COVER'];
-                                                                    }?>"
-                                             class="img-thumbnail"
-                                             width="30%"
-                                             alt="Coverbild vom Buch '<?php echo $books[$arraySize - 3]['TITEL']; ?>'">
+                                <a class="link-dark" href="index.php?site=buchdetail&buchid=<?php echo $books[$arraySize - 3]['BUCH_ID']; ?>" title="Details zum Buch">
+                                    <div class="row">
+                                        <div class="col">
+                                            <img src="img/book_covers/<?php
+                                                                        if($books[$arraySize - 3]['COVER'] == null) {
+                                                                            echo "book_cover_na.jpg";
+                                                                        }
+                                                                        else {
+                                                                            echo $books[$arraySize - 3]['COVER'];
+                                                                        }?>"
+                                                 class="img-thumbnail"
+                                                 width="30%"
+                                                 alt="Coverbild vom Buch '<?php echo $books[$arraySize - 3]['TITEL']; ?>'">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col">
-                                        <p><?php echo $books[$arraySize - 3]['TITEL']; ?></p>
+                                    <div class="row mt-2">
+                                        <div class="col">
+                                            <p><?php echo $books[$arraySize - 3]['TITEL']; ?></p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <?php } ?>
                         </div>
@@ -107,12 +113,11 @@
                        // ++$count;
                     //endforeach;
                 ?>
-                    <!-- TODO: Change color of horizontal line -->
-                <hr class="text-decoration-line-through">
+                <hr class="text-decoration-line-through mb-5">
 
                 <!-- This row shows the status of the total capacity and amount of books of all warehouses. -->
                 <!-- And it shows the capacity and number of books in every warehouse -->
-                <div class="row align-items-center">
+                <div class="row align-items-center mb-5">
                         <div class="col">
                             <h2 class="h2">Status aller Buchlager:</h2>
                         </div>
@@ -130,6 +135,24 @@
                                 </div>
                             </div>
                         </div>
+                </div>
+
+                <!-- Button for adding data: books, authors and bookstores -->
+                <hr class="text-decoration-line-through mb-5">
+
+                <div class="row mb-3">
+                    <div class="col">
+                        <h2 class="mb-4">Daten hinzufügen:</h2>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-secondary" href="index.php?site=neues-buch" title="Buch hinzufügen">Neues Buch</a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-secondary" href="index.php?site=neuer-autor" title="Autor:in hinzufügen">Neue/r Autor:in</a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-secondary" href="index.php?site=neues-buchlager" title="Buchlager hinzufügen">Neues Buchlager</a>
+                    </div>
                 </div>
             </div>
     </body>

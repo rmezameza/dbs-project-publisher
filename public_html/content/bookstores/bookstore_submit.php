@@ -7,102 +7,135 @@
     <body>
         <div class="container">
             <?php
-                include_once 'func/class/BookstoreHandler.php';
-                include_once 'func/inc/sec.inc.php';
+            include_once 'func/class/BookstoreHandler.php';
+            include_once 'func/inc/sec.inc.php';
+            include_once 'func/inc/bookstore.inc.php';
 
-                $bookstoreHandler = new BookstoreHandler();
+            $bookstoreHandler = new BookstoreHandler();
 
-                $amountOfBooks = $bookID = $bookstoreID = $rackID = $rackCapacity = $sumBooksSpeficicRack = $checkDeletion = 0;
-                $bookidGenre = $genre = "";
+            $bookstoreID = isset($_GET['bookstoreid']) ? htmlentities($_GET['bookstoreid']) : null;
+            $op = isset($_GET['op']) ? htmlentities($_GET['op']) : null;
+            $objectName = "";
+            $objectOperation = "";
+            $checkSubmit = true;
 
-                if($_SERVER['REQUEST_METHOD'] == "POST") {
-                    if(isset($_POST['bookstore_id'])) {
-                        $bookstoreID = (int)sanitizeInput($_POST['bookstore_id']);
+            if(is_null($bookstoreID) && is_null($op)) {
+                include 'error/not_allowed.html';
+                exit;
+            }
+
+            switch($op) {
+                case "buchlager-loeschen":
+                    $objectName = "Buchlager";
+                    $objectOperation = "gelöscht";
+                    $checkSubmit = $bookstoreHandler->deleteBookstoreOrRack($bookstoreID, null);
+                    break;
+                case "regal-loeschen":
+                    $rackID = isset($_GET['regalnr']) ? htmlentities($_GET['regalnr']) : null;
+                    checkInputValueForNull($rackID);
+                    $objectName = "Regal";
+                    $objectOperation = "gelöscht";
+                    $checkSubmit = $bookstoreHandler->deleteBookstoreOrRack($bookstoreID, $rackID);
+                    break;
+                case "neues-regal":
+                    $objectName = "Regal";
+                    $objectOperation = "hinzugefügt";
+                    $newRackArray = array();
+                    $newRackArray['LAG_ID'] = $bookstoreID;
+
+                    if($_SERVER['REQUEST_METHOD'] == "POST") {
+                        if(isset($_POST['genre'])) {
+                            $newRackArray['REGAL_NAME'] = sanitizeInput($_POST['genre']);
+                        }
+
+                        if(isset($_POST['capacity'])) {
+                            $newRackArray['REGAL_KAPAZITAET'] = (int)sanitizeInput($_POST['capacity']);
+                        }
                     }
 
-                    if(isset($_POST['bookid_genre'])) {
-                        $bookidGenre = sanitizeInput($_POST['bookid_genre']);
-                        $bookidGenre = explode('#', $bookidGenre);
-                        $bookID = (int)$bookidGenre[0];
-                        $genre = $bookidGenre[1];
-                    }
+                    $checkSubmit = $bookstoreHandler->addRackToBookstore($newRackArray);
+                    break;
+                case "buchlager-edit":
+                    $objectName = "Buchlager";
+                    $objectOperation = "bearbeitet";
+                    $bookstoreArray = checkPostRequest();
 
-                    if(isset($_POST['bookstore_book_deletion'])) {
-                        $checkDeletion = (int)sanitizeInput($_POST['bookstore_book_deletion']);
-                    }
+                    /*
+                    if($_SERVER['REQUEST_METHOD'] == "POST") {
+                        if(isset($_POST['street'])) {
+                            $bookstoreArray['LAG_STRASSE'] = sanitizeInput($_POST['street']);
+                        }
 
-                    if(isset($_POST['amount_of_books'])) {
-                        $amountOfBooks = (int)sanitizeInput($_POST['amount_of_books']);
-                    }
-                }
+                        if(isset($_POST['zip'])) {
+                            $bookstoreArray['LAG_PLZ'] = sanitizeInput($_POST['zip']);
+                        }
 
-                if($bookstoreHandler->checkGenreExistInBookstore($bookstoreID, $genre) == null) {
-                    echo "<h1 class='mb-5'>Achtung!</h1>";
-                    echo "<p>Es gibt kein Regal für dieses Genre</p>";
+                        if(isset($_POST['place'])) {
+                            $bookstoreArray['LAG_ORT'] = sanitizeInput($_POST['place']);
+                        }
 
-                    echo "<a class='btn btn-secondary' href='index.php?site=buchlager-buecheranzahl-bearbeiten' titel='Zurück'>Zurück</a>";
-                    exit;
-                }
+                        if(isset($_POST['country'])) {
+                            $bookstoreArray['LAG_LAND'] = sanitizeInput($_POST['country']);
+                        }
+                    }*/
 
-                $rackID = $bookstoreHandler->getRackID($genre, $bookstoreID);
+                    $bookstoreArray['LAG_ID'] = $bookstoreID;
 
-                if($checkDeletion) {
-                    if($bookstoreHandler->deleteBookInRack($bookID, $rackID, $bookstoreID)) {
-                        echo "<h1 class='mb-5'>Erfolgreich!</h1>";
-                        echo "<p>Das Buch wurde erfolgreich aus dem Buchlager gelöscht.</p>";
-                    }
-                    else {
-                        echo "<h1 class='mb-5'>Fehler!</h1>";
-                        echo "<p>Das Buch wurde leider nicht aus dem Buchlager gelöscht.</p>";
-                    }
+                    $checkSubmit = $bookstoreHandler->editBookstore($bookstoreArray);
+                    break;
+                case "neues-buchlager":
+                    $objectName = "Buchlager";
+                    $objectOperation = "hinzugefügt";
+                    $bookstoreArray = checkPostRequest();
+
+                    /*
+                    if($_SERVER['REQUEST_METHOD'] == "POST") {
+                        if(isset($_POST['street'])) {
+                            $bookstoreArray['LAG_STRASSE'] = sanitizeInput($_POST['street']);
+                        }
+
+                        if(isset($_POST['zip'])) {
+                            $bookstoreArray['LAG_PLZ'] = sanitizeInput($_POST['zip']);
+                        }
+
+                        if(isset($_POST['place'])) {
+                            $bookstoreArray['LAG_ORT'] = sanitizeInput($_POST['place']);
+                        }
+
+                        if(isset($_POST['country'])) {
+                            $bookstoreArray['LAG_LAND'] = sanitizeInput($_POST['country']);
+                        }
+                    }*/
+                    $checkSubmit = $bookstoreHandler->addBokstore($bookstoreArray);
+                    break;
+            }
+
+            ?>
+            <?php if($checkSubmit) { ?>
+                <h1>Geschafft!</h1>
+                <h2>Das <?php echo $objectName; ?> wurde erfolgreich <?php echo $objectOperation; ?>.</h2>
+            <?php
                 }
                 else {
-                    $rackCapacity = $bookstoreHandler->getRackCapacity($rackID, $bookstoreID);
-                    $sumBooksSpeficicRack = $bookstoreHandler->getSumBooksForSpecificRack($bookstoreID, $rackID);
-
-                    if($bookstoreHandler->checkIfBookInRack($bookID, $rackID, $bookstoreID) == null) {
-                        if($rackCapacity <= ($amountOfBooks + $sumBooksSpeficicRack[0]['SUMME_BUECHER_REGAL'])) {
-                            echo "<h1 class='mb-5'>Fehler!</h1>";
-                            echo "<p>" .
-                                "Da das Buch nicht im Regal gab, wurde versucht es hinzuzufügen.<br>" .
-                                "Jedoch würde die gewünschte Buchanzahl von '{$amountOfBooks}' die Kapazität überschreiten.<br>" .
-                                "Derzeitiger Stand:  {$sumBooksSpeficicRack[0]['SUMME_BUECHER_REGAL']} / {$rackCapacity} Bücher" .
-                                "</p>";
-                        }
-                        else {
-                            if($bookstoreHandler->addBookToRack($bookID, $rackID, $bookstoreID, $amountOfBooks)) {
-                                echo "<h1 class='mb-5'>Erfolgreich!</h1>";
-                                echo "<p>Das Buch gab es nicht im Regal und wurde automatisch hinzugefügt.</p>";
-                            }
-                            else {
-                                echo "<h1 class='mb-5'>Fehler!</h1>";
-                                echo "<p>Das Buch hätte automatisch hinzugefügt werden sollen. Es gab jedoch einen Fehler!</p>";
-                            }
-                        }
-
-                    }
-                    else {
-                        if($rackCapacity <= ($amountOfBooks + $sumBooksSpeficicRack[0]['SUMME_BUECHER_REGAL'])) {
             ?>
-                            <h1 class="mb-5">Fehler!</h1>
-                            <p>Die eingegebene Anzahl von "<?php echo $amountOfBooks ?>" Bücher überschreitet die Regalkapazität.</p>
-                            <p>Derzeitiger Stand: <?php echo $sumBooksSpeficicRack[0]['SUMME_BUECHER_REGAL'] . " / " . $rackCapacity; ?> Bücher.</p>
-            <?php
-                        }
-                        else {
-                            if($bookstoreHandler->updateAmountOfBooksInRack($bookID, $rackID, $bookstoreID, ($amountOfBooks + $sumBooksSpeficicRack[0]['SUMME_BUECHER_REGAL']))) {
-                                echo "<h1 class='mb-5'>Erfolgreich!</h1>";
-                                echo "<p>Die Buchanzahl wurde erfolgreich aktualisiert.</p>";
-                            }
-                            else {
-                                echo "<h1 class='mb-5'>Fehler!</h1>";
-                                echo "<p>Die Buchanzahl wurde leider nicht aktualisiert.</p>";
-                            }
-                        }
-                    }
-                }
+                <h1>Fehler!</h1>
+                <h2>Das <?php echo $objectName; ?> wurde leider nicht <?php echo $objectOperation; ?>.</h2>
+            <?php } ?>
 
-            ?>
-            <a class="btn btn-secondary" href="index.php?site=buchlager-buecheranzahl-bearbeiten" titel="Zurück">Zurück</a>
+            <a class="btn btn-secondary" <?php
+                                            if($op == "buchlager-loeschen" || $op == "neues-buchlager") {
+                                                echo " href='index.php?site=buchlager'";
+                                                echo " title='Zurück zu den Buchlager'";
+                                            }
+                                            else { //if($op == "regal-loeschen" || $op == "neues-regal" || $)
+                                                echo " href='index.php?site=buchlager-detail&bookstoreid={$bookstoreID}'";
+                                                echo " title='Zurück zum Buchlager'";
+                                            }
+                                        ?>
+            >
+                Zurück
+            </a>
+
+        </div>
     </body>
 </html>

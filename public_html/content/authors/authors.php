@@ -6,38 +6,47 @@
 
     <body>
         <div class="container">
-            <h1 class="mb-4">Autor:innen</h1>
+            <h1>Autor:innen</h1>
+            <h2 class="mb-4">Nach Nachnamen sortiert</h2>
             <?php
                 include_once 'func/class/AuthorHandler.php';
 
                 $authorHandler = new AuthorHandler();
                 $authors = $authorHandler->getAllAuthorsSortedByName(null);
 
-                //$alphArray = array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z");
                 $count = 0;
 
                 $letter = strtoupper(substr($authors[$count]['AU_NACHNAME'], 0, 1));
 
                 foreach($authors as $author) :
+                    $fullName = $authorHandler->fullAuthorName($author['AUTOR_ID']);
+
+
                     if($count != 0 && substr($authors[$count - 1]['AU_NACHNAME'], 0, 1) != substr($author['AU_NACHNAME'], 0, 1)) {
-                        $letter = strtoupper(substr($author['AU_NACHNAME'], 0, 1));
+                        $letter = (count($author['AU_NACHNAME']) != 0) ? strtoupper(substr($author['AU_NACHNAME'], 0, 1)) : "-";
                         echo "<h2>{$letter}</h2>";
                     }
                     else if($count == 0) {
                         echo "<h2>{$letter}</h2>";
                     }
+
+
             ?>
                     <p>
                         <a href="index.php?site=autor-detail&autorid=<?php echo htmlentities($author['AUTOR_ID']); ?>"
                             class="link-dark"
-                            title="Details zu <?php echo $author['AU_VORNAME'] . " " . $author['AU_NACHNAME']; ?>">
-                                <?php echo $author['AU_NACHNAME'] . ", " . $author['AU_VORNAME']; ?>
+                            title="Details zu <?php echo $fullName; ?>">
+                                <?php if(!is_null($author['AU_NACHNAME'])) {
+                                    echo $author['AU_NACHNAME'] . ", ";
+                                }
+                                echo $author['AU_VORNAME']; ?>
                         </a>
                     </p>
             <?php
                     ++$count;
                 endforeach;
             ?>
+            </div>
         </div>
     </body>
 </html>
