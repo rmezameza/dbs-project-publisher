@@ -2,9 +2,9 @@
 
 class PasswordHandler
 {
-    private const USERNAME = "a11848674";
-    private const PASSWORD = 'dwH$KI6<hBS)#"oy3*bg';
-    private const CONNECTION = "//oracle-lab.cs.univie.ac.at:1521/lab";
+    private const USERNAME = "username";                // In the course I used my student id
+    private const PASSWORD = 'password';
+    private const CONNECTION = "address_of_database";
 
     public function getUsername() : string {
         return self::USERNAME;
